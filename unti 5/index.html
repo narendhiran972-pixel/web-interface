@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow - Clean & Modern To-Do List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 11 3 3L22 4"></path>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+          </div>
+          <span class="logo-text">TaskFlow</span>
+        </div>
+        <button class="mobile-close-btn" id="closeSidebarBtn" aria-label="Close menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+      </div>
+
+      <div class="quick-add-container">
+        <button class="btn btn-primary btn-block" id="sidebarQuickAddBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>New Task</span>
+        </button>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-page="home">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="nav-label">Home</span>
+          <span class="nav-badge" id="badge-home">0</span>
+        </button>
+
+        <button class="nav-item" data-page="daily">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span class="nav-label">Daily</span>
+          <span class="nav-badge" id="badge-daily">0</span>
+        </button>
+
+        <button class="nav-item" data-page="weekly">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path><path d="M8 18h.01"></path><path d="M12 18h.01"></path></svg>
+          <span class="nav-label">Weekly</span>
+          <span class="nav-badge" id="badge-weekly">0</span>
+        </button>
+
+        <button class="nav-item" data-page="important">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span class="nav-label">Important</span>
+          <span class="nav-badge star-badge" id="badge-important">0</span>
+        </button>
+
+        <button class="nav-item" data-page="calendar">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span class="nav-label">Live Calendar</span>
+        </button>
+
+        <button class="nav-item" data-page="dashboard">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+          <span class="nav-label">Dashboard</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="completion-pill">
+          <div class="pill-info">
+            <span>Overall Progress</span>
+            <strong id="sidebarProgressPercent">0%</strong>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="sidebarProgressBar"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+      <!-- Top Bar Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="menu-toggle-btn" id="openSidebarBtn" aria-label="Open menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+          </button>
+          <div>
+            <h1 class="page-title" id="currentPageTitle">Home</h1>
+            <p class="page-subtitle" id="currentDateDisplay">Loading date...</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="search-box">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="globalSearchInput" placeholder="Search tasks..." aria-label="Search tasks" />
+            <button class="clear-search-btn" id="clearSearchBtn" aria-label="Clear search" style="display:none;">&times;</button>
+          </div>
+          <button class="btn btn-primary" id="headerAddTaskBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span class="btn-text">Add Task</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="content-container">
+
+        <!-- ==================== 1. HOME VIEW ==================== -->
+        <section class="page-view active" id="view-home">
+          <!-- Summary Cards -->
+          <div class="stats-grid home-stats">
+            <div class="stat-card">
+              <div class="stat-icon total-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect></svg>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-title">Total Tasks</span>
+                <span class="stat-value" id="homeTotalTasks">0</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon pending-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-title">Pending Tasks</span>
+                <span class="stat-value" id="homePendingTasks">0</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon completed-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-title">Completed Tasks</span>
+                <span class="stat-value" id="homeCompletedTasks">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Add Bar -->
+          <div class="quick-inline-add card">
+            <input type="text" id="quickTaskInput" placeholder="Quickly add a task and press Enter..." />
+            <input type="date" id="quickTaskDate" />
+            <button class="btn btn-primary" id="quickTaskAddBtn">
+              <span>Add</span>
+            </button>
+          </div>
+
+          <!-- Tasks Sections -->
+          <div class="dual-column-layout">
+            <!-- Upcoming Tasks -->
+            <div class="column-card card">
+              <div class="section-header">
+                <div class="title-with-badge">
+                  <h2 class="section-title">Upcoming Tasks</h2>
+                  <span class="count-pill" id="homeUpcomingCount">0</span>
+                </div>
+                <div class="header-actions">
+                  <button class="btn-text-action" id="viewAllUpcomingBtn">View All</button>
+                </div>
+              </div>
+              <div class="task-list" id="homeUpcomingList">
+                <!-- Dynamic Content -->
+              </div>
+            </div>
+
+            <!-- Recently Completed -->
+            <div class="column-card card">
+              <div class="section-header">
+                <div class="title-with-badge">
+                  <h2 class="section-title">Recently Completed</h2>
+                  <span class="count-pill count-success" id="homeCompletedCount">0</span>
+                </div>
+                <div class="header-actions">
+                  <button class="btn-text-action text-danger" id="clearCompletedBtn" title="Clear all completed tasks">Clear</button>
+                </div>
+              </div>
+              <div class="task-list" id="homeCompletedList">
+                <!-- Dynamic Content -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 2. DAILY VIEW ==================== -->
+        <section class="page-view" id="view-daily">
+          <!-- Daily Header Banner -->
+          <div class="daily-banner card">
+            <div class="daily-banner-text">
+              <h2>Today's Agenda</h2>
+              <p>Manage default daily repeating routines alongside tasks planned exclusively for today.</p>
+            </div>
+            <button class="btn btn-primary" id="addTodayTaskBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Add Today's Task</span>
+            </button>
+          </div>
+
+          <!-- Repeating Routines Section -->
+          <div class="card mb-4">
+            <div class="section-header">
+              <div class="title-with-badge">
+                <div class="icon-heading">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+                  <h2 class="section-title">Default Daily Habits & Routines</h2>
+                </div>
+                <span class="badge-sub">Repeats every day</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" id="addHabitBtn">+ New Habit</button>
+            </div>
+            <div class="task-list" id="dailyHabitsList">
+              <!-- Habit items -->
+            </div>
+          </div>
+
+          <!-- Today's Tasks: Pending and Completed Separately -->
+          <div class="dual-column-layout">
+            <div class="column-card card">
+              <div class="section-header">
+                <div class="title-with-badge">
+                  <h2 class="section-title">Pending Today</h2>
+                  <span class="count-pill" id="dailyPendingCount">0</span>
+                </div>
+              </div>
+              <div class="task-list" id="dailyPendingList">
+                <!-- Pending today tasks -->
+              </div>
+            </div>
+
+            <div class="column-card card">
+              <div class="section-header">
+                <div class="title-with-badge">
+                  <h2 class="section-title">Completed Today</h2>
+                  <span class="count-pill count-success" id="dailyCompletedCount">0</span>
+                </div>
+              </div>
+              <div class="task-list" id="dailyCompletedList">
+                <!-- Completed today tasks -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 3. WEEKLY VIEW ==================== -->
+        <section class="page-view" id="view-weekly">
+          <!-- Week Navigation Header -->
+          <div class="card week-nav-card">
+            <div class="week-nav-controls">
+              <button class="btn btn-secondary btn-icon" id="prevWeekBtn" title="Previous Week">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+              <div class="week-range-info">
+                <h2 id="weekRangeDisplay">September 22 - September 28, 2026</h2>
+                <span class="badge badge-week" id="currentWeekIndicator">Current Week</span>
+              </div>
+              <div class="week-nav-right">
+                <button class="btn btn-secondary btn-sm" id="thisWeekBtn">This Week</button>
+                <button class="btn btn-secondary btn-icon" id="nextWeekBtn" title="Next Week">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7 Days Grid -->
+          <div class="weekly-grid" id="weeklyGrid">
+            <!-- Day columns dynamically rendered (Mon -> Sun) -->
+          </div>
+        </section>
+
+        <!-- ==================== 4. IMPORTANT VIEW ==================== -->
+        <section class="page-view" id="view-important">
+          <div class="section-banner card important-banner">
+            <div class="banner-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <div>
+              <h2>High-Priority & Starred Tasks</h2>
+              <p>Keep track of your most critical responsibilities across all dates in one place.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-header">
+              <div class="title-with-badge">
+                <h2 class="section-title">Important Tasks</h2>
+                <span class="count-pill star-count-pill" id="importantTotalCount">0</span>
+              </div>
+              <div class="filter-controls">
+                <select id="importantFilterStatus" class="select-input">
+                  <option value="all">All Status</option>
+                  <option value="pending" selected>Pending Only</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+            </div>
+            <div class="task-list" id="importantTasksList">
+              <!-- Important tasks items -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 5. LIVE CALENDAR VIEW ==================== -->
+        <section class="page-view" id="view-calendar">
+          <div class="calendar-layout">
+            <!-- Left: Calendar Widget -->
+            <div class="calendar-widget card">
+              <div class="calendar-header">
+                <div class="calendar-month-year">
+                  <h2 id="calendarMonthYear">September 2026</h2>
+                </div>
+                <div class="calendar-nav-buttons">
+                  <button class="btn btn-secondary btn-icon" id="calPrevMonthBtn" title="Previous Month">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  </button>
+                  <button class="btn btn-secondary btn-sm" id="calTodayBtn">Today</button>
+                  <button class="btn btn-secondary btn-icon" id="calNextMonthBtn" title="Next Month">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Days of week labels -->
+              <div class="calendar-weekdays">
+                <span>Sun</span>
+                <span>Mon</span>
+                <span>Tue</span>
+                <span>Wed</span>
+                <span>Thu</span>
+                <span>Fri</span>
+                <span>Sat</span>
+              </div>
+
+              <!-- Calendar Days Grid -->
+              <div class="calendar-days-grid" id="calendarDaysGrid">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Right: Selected Date Tasks Breakdown -->
+            <div class="calendar-details card">
+              <div class="section-header">
+                <div>
+                  <span class="text-muted text-xs uppercase font-bold">Selected Date</span>
+                  <h3 class="section-title mt-1" id="calSelectedDateTitle">Today's Schedule</h3>
+                </div>
+                <button class="btn btn-primary btn-sm" id="calAddForDateBtn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  <span>Add Task</span>
+                </button>
+              </div>
+
+              <div class="selected-date-stats">
+                <div class="micro-stat">
+                  <span class="micro-label">Total</span>
+                  <strong id="calDateTotal">0</strong>
+                </div>
+                <div class="micro-stat">
+                  <span class="micro-label">Pending</span>
+                  <strong id="calDatePending">0</strong>
+                </div>
+                <div class="micro-stat">
+                  <span class="micro-label">Completed</span>
+                  <strong id="calDateCompleted">0</strong>
+                </div>
+              </div>
+
+              <div class="task-list calendar-task-list" id="calendarDateTasksList">
+                <!-- Populated on date click -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== 6. DASHBOARD VIEW ==================== -->
+        <section class="page-view" id="view-dashboard">
+          <!-- 6 Key Metric Cards -->
+          <div class="stats-grid dashboard-grid">
+            <!-- 1. Total Tasks -->
+            <div class="stat-card">
+              <div class="stat-icon total-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect></svg>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-title">Total Tasks</span>
+                <span class="stat-value" id="dashTotalTasks">0</span>
+              </div>
+            </div>
+
+            <!-- 2. Completed Tasks -->
+            <div class="stat-card">
+              <div class="stat-icon completed-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-title">Completed Tasks</span>
+                <span class="stat-value" id="dashCompletedTasks">0</span>
+              </div>
+            </div>
+
+            <!-- 3. Pending Tasks -->
+            <div class="stat-card">
+              <div class="stat-icon pending-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-title">Pending Tasks</span>
+                <span class="stat-value" id="dashPendingTasks">0</span>
+              </div>
+            </div>
+
+            <!-- 4. Important Tasks -->
+            <div class="stat-card">
+              <div class="stat-icon star-icon-bg">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-title">Important Tasks</span>
+                <span class="stat-value" id="dashImportantTasks">0</span>
+              </div>
+            </div>
+
+            <!-- 5. Today's Tasks -->
+            <div class="stat-card">
+              <div class="stat-icon today-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-title">Today's Tasks</span>
+                <span class="stat-value" id="dashTodayTasks">0</span>
+              </div>
+            </div>
+
+            <!-- 6. This Week's Tasks -->
+            <div class="stat-card">
+              <div class="stat-icon week-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </div>
+              <div class="stat-meta">
+                <span class="stat-title">This Week's Tasks</span>
+                <span class="stat-value" id="dashWeekTasks">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visual Analytics Row -->
+          <div class="dashboard-analytics-row">
+            <!-- Progress Card -->
+            <div class="card completion-overview-card">
+              <h3 class="section-title mb-4">Task Completion Rate</h3>
+              <div class="progress-circle-wrapper">
+                <div class="circular-progress" id="dashProgressRing">
+                  <div class="inner-circle">
+                    <span class="ring-percentage" id="dashProgressText">0%</span>
+                    <span class="ring-subtext">Completed</span>
+                  </div>
+                </div>
+                <div class="progress-details">
+                  <div class="progress-legend-item">
+                    <span class="legend-dot dot-completed"></span>
+                    <span class="legend-label">Completed</span>
+                    <strong class="legend-val" id="dashLegendCompleted">0</strong>
+                  </div>
+                  <div class="progress-legend-item">
+                    <span class="legend-dot dot-pending"></span>
+                    <span class="legend-label">Pending</span>
+                    <strong class="legend-val" id="dashLegendPending">0</strong>
+                  </div>
+                  <div class="progress-legend-item">
+                    <span class="legend-dot dot-important"></span>
+                    <span class="legend-label">Important</span>
+                    <strong class="legend-val" id="dashLegendImportant">0</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Priority & Categorization Breakdown -->
+            <div class="card distribution-card">
+              <h3 class="section-title mb-4">Task Breakdown</h3>
+              <div class="distribution-bars">
+                <div class="dist-item">
+                  <div class="dist-labels">
+                    <span>Daily Habits & Routines</span>
+                    <span id="dashHabitsCount">0 tasks</span>
+                  </div>
+                  <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="dashHabitsBar" style="width: 0%; background: #6366f1;"></div>
+                  </div>
+                </div>
+
+                <div class="dist-item">
+                  <div class="dist-labels">
+                    <span>High Priority</span>
+                    <span id="dashHighPriorityCount">0 tasks</span>
+                  </div>
+                  <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="dashHighPriorityBar" style="width: 0%; background: #ef4444;"></div>
+                  </div>
+                </div>
+
+                <div class="dist-item">
+                  <div class="dist-labels">
+                    <span>Scheduled for This Week</span>
+                    <span id="dashWeekScheduleCount">0 tasks</span>
+                  </div>
+                  <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="dashWeekBar" style="width: 0%; background: #0ea5e9;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Actions -->
+              <div class="dash-quick-actions mt-4">
+                <button class="btn btn-secondary btn-sm" id="dashGoDailyBtn">View Today's Tasks</button>
+                <button class="btn btn-secondary btn-sm" id="dashGoCalendarBtn">Open Live Calendar</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ==================== ADD / EDIT TASK MODAL ==================== -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Create New Task</h3>
+        <button class="modal-close-btn" id="closeModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="taskForm">
+        <input type="hidden" id="formTaskId" />
+
+        <div class="form-group">
+          <label for="formTaskTitle" class="form-label">Task Title <span class="required">*</span></label>
+          <input type="text" id="formTaskTitle" class="form-control" placeholder="What needs to be done?" required />
+        </div>
+
+        <div class="form-group">
+          <label for="formTaskDesc" class="form-label">Description / Notes</label>
+          <textarea id="formTaskDesc" class="form-control" rows="3" placeholder="Add additional details or links..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="formTaskDate" class="form-label">Due Date</label>
+            <input type="date" id="formTaskDate" class="form-control" />
+          </div>
+
+          <div class="form-group col">
+            <label for="formTaskPriority" class="form-label">Priority</label>
+            <select id="formTaskPriority" class="form-control">
+              <option value="normal">Normal</option>
+              <option value="high">High Priority</option>
+              <option value="low">Low Priority</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-checkboxes">
+          <label class="custom-checkbox-label">
+            <input type="checkbox" id="formTaskImportant" />
+            <span class="custom-checkbox-box"></span>
+            <span class="checkbox-text">
+              <strong>Mark as Important</strong>
+              <small class="text-muted">Highlights task with gold badge</small>
+            </span>
+          </label>
+
+          <label class="custom-checkbox-label">
+            <input type="checkbox" id="formTaskDaily" />
+            <span class="custom-checkbox-box"></span>
+            <span class="checkbox-text">
+              <strong>Daily Repeating Task</strong>
+              <small class="text-muted">Automatically appears in Daily Habits</small>
+            </span>
+          </label>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelModalBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveTaskBtn">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== DELETE CONFIRMATION MODAL ==================== -->
+  <div class="modal-overlay" id="deleteConfirmModal">
+    <div class="modal-card modal-confirm">
+      <div class="confirm-icon-wrapper">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+      </div>
+      <h3 class="modal-title">Delete Task?</h3>
+      <p class="text-muted text-sm mt-1">Are you sure you want to permanently delete this task? This action cannot be undone.</p>
+      <div class="modal-footer justify-center mt-4">
+        <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -95,7 +95,7 @@ function App() {
 
         {/* Email */}
         <div style={styles.group}>
-          <label>Email</label>
+          <label>Email </label>
 
           <input
             type="text"
