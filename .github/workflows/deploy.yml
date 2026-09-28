@@ -1,0 +1,298 @@
+name: Deploy All Projects to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # ---------- Create final Pages folder ----------
+      - name: Create deployment folder
+        run: |
+          mkdir -p dist
+
+      # ---------- Project 1: Counter App ----------
+      - name: Copy Counter App
+        run: |
+          mkdir -p dist/counterapp
+          cp "unti 1/counterapp/counterapp.html" dist/counterapp/index.html
+
+      # ---------- Project 2: Student Profile ----------
+      - name: Copy Student Profile
+        run: |
+          mkdir -p dist/student-profile
+          cp "unti 1/project 2/Student Profile Card.html" dist/student-profile/index.html
+
+      # ---------- Project 3: Hobby Pro ----------
+      - name: Build Hobby Pro
+        working-directory: unti 2/hobby pro
+        run: |
+          npm ci
+          npm run build
+
+      - name: Copy Hobby Pro
+        run: |
+          mkdir -p dist/hobby-pro
+          cp -r "unti 2/hobby pro/dist/." dist/hobby-pro/
+
+      # ---------- Project 4: Student Pro ----------
+      - name: Build Student Pro
+        working-directory: unti 2/student pro
+        run: |
+          npm ci
+          npm run build
+
+      - name: Copy Student Pro
+        run: |
+          mkdir -p dist/student-pro
+          cp -r "unti 2/student pro/build/." dist/student-pro/
+
+      # ---------- Project 5: Unit 3 ----------
+      - name: Build Unit 3
+        working-directory: unit3
+        run: |
+          npm ci
+          npm run build
+
+      - name: Copy Unit 3
+        run: |
+          mkdir -p dist/unit3
+          cp -r unit3/dist/. dist/unit3/
+
+      # ---------- Project 6: Unti 4 ----------
+      - name: Build Unti 4
+        working-directory: unti4
+        run: |
+          npm ci
+          npm run build
+
+      - name: Copy Unti 4
+        run: |
+          mkdir -p dist/unti4
+          cp -r unti4/dist/. dist/unti4/
+
+      # ---------- Project 7: Router Demo ----------
+      - name: Build Router Demo
+        working-directory: unti4/uint 5 web pro/router-demo
+        run: |
+          npm ci
+          npm run build
+
+      - name: Copy Router Demo
+        run: |
+          mkdir -p dist/router-demo
+          cp -r "unti4/uint 5 web pro/router-demo/build/." dist/router-demo/
+
+      # ---------- Project 8: Main Unti 5 ----------
+      - name: Copy Unti 5 Website
+        run: |
+          mkdir -p dist/unti5
+          cp "unti 5/index.html" dist/unti5/
+          cp "unti 5/style.css" dist/unti5/
+          cp "unti 5/app.js" dist/unti5/
+
+      # ---------- Project 9: Report Card ----------
+      - name: Build Report Card
+        working-directory: unti 5/unti 5 report card/report-card-portal
+        run: |
+          npm ci
+          npm run build
+
+      - name: Copy Report Card
+        run: |
+          mkdir -p dist/report-card
+          cp -r "unti 5/unti 5 report card/report-card-portal/dist/." dist/report-card/
+
+      # ---------- Dashboard ----------
+      - name: Create Dashboard
+        run: |
+          cat > dist/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Narendhiran - Projects</title>
+            <style>
+              * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+              }
+
+              body {
+                font-family: Arial, sans-serif;
+                min-height: 100vh;
+                background: linear-gradient(135deg, #0f172a, #1e293b);
+                color: white;
+                padding: 40px 20px;
+              }
+
+              .container {
+                max-width: 1100px;
+                margin: auto;
+              }
+
+              h1 {
+                text-align: center;
+                font-size: 42px;
+                margin-bottom: 10px;
+              }
+
+              .subtitle {
+                text-align: center;
+                color: #cbd5e1;
+                margin-bottom: 40px;
+              }
+
+              .projects {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+              }
+
+              .card {
+                background: rgba(255,255,255,0.08);
+                border: 1px solid rgba(255,255,255,0.15);
+                border-radius: 18px;
+                padding: 25px;
+                transition: 0.3s;
+              }
+
+              .card:hover {
+                transform: translateY(-6px);
+                background: rgba(255,255,255,0.14);
+              }
+
+              .card h2 {
+                margin-bottom: 10px;
+              }
+
+              .card p {
+                color: #cbd5e1;
+                min-height: 45px;
+                margin-bottom: 20px;
+              }
+
+              .btn {
+                display: inline-block;
+                text-decoration: none;
+                background: #ffffff;
+                color: #0f172a;
+                padding: 10px 18px;
+                border-radius: 10px;
+                font-weight: bold;
+              }
+
+              .btn:hover {
+                background: #cbd5e1;
+              }
+            </style>
+          </head>
+
+          <body>
+            <div class="container">
+              <h1>🚀 Narendhiran's Projects</h1>
+              <p class="subtitle">Web Interface & React Projects</p>
+
+              <div class="projects">
+
+                <div class="card">
+                  <h2>Counter App</h2>
+                  <p>Simple HTML Counter Application.</p>
+                  <a class="btn" href="./counterapp/">Open Project</a>
+                </div>
+
+                <div class="card">
+                  <h2>Student Profile</h2>
+                  <p>Student Profile Card using HTML.</p>
+                  <a class="btn" href="./student-profile/">Open Project</a>
+                </div>
+
+                <div class="card">
+                  <h2>Hobby Pro</h2>
+                  <p>React and Vite hobby project.</p>
+                  <a class="btn" href="./hobby-pro/">Open Project</a>
+                </div>
+
+                <div class="card">
+                  <h2>Student Pro</h2>
+                  <p>React student project.</p>
+                  <a class="btn" href="./student-pro/">Open Project</a>
+                </div>
+
+                <div class="card">
+                  <h2>Unit 3</h2>
+                  <p>React Router based project.</p>
+                  <a class="btn" href="./unit3/">Open Project</a>
+                </div>
+
+                <div class="card">
+                  <h2>Unti 4</h2>
+                  <p>React Router project.</p>
+                  <a class="btn" href="./unti4/">Open Project</a>
+                </div>
+
+                <div class="card">
+                  <h2>Router Demo</h2>
+                  <p>React routing demonstration project.</p>
+                  <a class="btn" href="./router-demo/">Open Project</a>
+                </div>
+
+                <div class="card">
+                  <h2>Unti 5 Website</h2>
+                  <p>HTML, CSS and JavaScript project.</p>
+                  <a class="btn" href="./unti5/">Open Project</a>
+                </div>
+
+                <div class="card">
+                  <h2>Report Card Portal</h2>
+                  <p>React based student report card system.</p>
+                  <a class="btn" href="./report-card/">Open Project</a>
+                </div>
+
+              </div>
+            </div>
+          </body>
+          </html>
+          EOF
+
+      # ---------- GitHub Pages configuration ----------
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
