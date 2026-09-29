@@ -6,6 +6,5 @@ import "./form.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Hobby />
-    <Animation />
   </StrictMode>
 );
