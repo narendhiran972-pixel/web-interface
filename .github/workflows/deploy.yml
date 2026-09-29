@@ -54,7 +54,7 @@ jobs:
           cp -r "unti 2/hobby pro/dist/." dist/hobby-pro/
 
       # ---------- Project 4: Student Pro ----------
-        - name: Build Student Pro
+      - name: Build Student Pro
         working-directory: unti 2/student pro
         run: |
           rm -rf node_modules
@@ -132,6 +132,7 @@ jobs:
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Narendhiran - Projects</title>
+
             <style>
               * {
                 box-sizing: border-box;
@@ -211,8 +212,12 @@ jobs:
 
           <body>
             <div class="container">
-              <h1>🚀 Narendhiran's Projects</h1>
-              <p class="subtitle">Web Interface & React Projects</p>
+
+              <h1>Narendhiran's Projects</h1>
+
+              <p class="subtitle">
+                Web Interface & React Projects
+              </p>
 
               <div class="projects">
 
