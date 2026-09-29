@@ -57,7 +57,7 @@ jobs:
       - name: Build Student Pro
         working-directory: unti 2/student pro
         run: |
-          npm ci
+          npm install
           npm run build
 
       - name: Copy Student Pro
