@@ -54,9 +54,10 @@ jobs:
           cp -r "unti 2/hobby pro/dist/." dist/hobby-pro/
 
       # ---------- Project 4: Student Pro ----------
-      - name: Build Student Pro
+        - name: Build Student Pro
         working-directory: unti 2/student pro
         run: |
+          rm -rf node_modules
           npm install
           npm run build
 
