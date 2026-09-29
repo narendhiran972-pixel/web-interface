@@ -91,17 +91,12 @@ jobs:
           cp -r unti4/dist/. dist/unti4/
 
       # ---------- Project 7: Router Demo ----------
-      - name: Build Router Demo
+            - name: Build Router Demo
         working-directory: unti4/uint 5 web pro/router-demo
         run: |
-          npm ci
+          rm -rf node_modules
+          npm install
           npm run build
-
-      - name: Copy Router Demo
-        run: |
-          mkdir -p dist/router-demo
-          cp -r "unti4/uint 5 web pro/router-demo/build/." dist/router-demo/
-
       # ---------- Project 8: Main Unti 5 ----------
       - name: Copy Unti 5 Website
         run: |
